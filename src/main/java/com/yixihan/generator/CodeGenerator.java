@@ -27,6 +27,8 @@ public class CodeGenerator {
     /**
      * 自定义配置文件
      */
+    private static final String EXAMPLE = "/config/example.properties";
+
     private static final String YICODE = "/config/yicode.properties";
 
     /**
