@@ -82,6 +82,8 @@ public class CodeGenerator {
         gc.setBaseColumnList (false);
         // 不覆盖已有，则为false
         gc.setFileOverride (true);
+        // 去Service的I前缀
+        gc.setServiceName("%sService");
 
         mpg.setGlobalConfig (gc);
 
@@ -118,8 +120,8 @@ public class CodeGenerator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输入文件路径和名称
-                return projectPath + properties.getProperty ("custom.out.mapperPath") + packageConfig.getModuleName ()
-                        + "/" + tableInfo.getEntityName () + "Mapper" + StringPool.DOT_XML;
+                return projectPath + properties.getProperty ("custom.out.mapperPath") + "/"
+                        + tableInfo.getEntityName () + "Mapper" + StringPool.DOT_XML;
             }
         });
         cfg.setFileOutConfigList (focList);
