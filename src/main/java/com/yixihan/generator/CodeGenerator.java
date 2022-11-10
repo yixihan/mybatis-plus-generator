@@ -116,8 +116,8 @@ public class CodeGenerator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输入文件路径和名称
-                return projectPath + properties.getProperty ("custom.out.mapperPath") +
-                        packageConfig.getModuleName () + "/" + "Mapper" + StringPool.DOT_XML;
+                return projectPath + properties.getProperty ("custom.out.mapperPath") + packageConfig.getModuleName ()
+                        + "/" + tableInfo.getEntityName () + "Mapper" + StringPool.DOT_XML;
             }
         });
         cfg.setFileOutConfigList (focList);
