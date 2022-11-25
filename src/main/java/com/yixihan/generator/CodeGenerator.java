@@ -28,6 +28,7 @@ public class CodeGenerator {
      * 自定义配置文件
      */
     private static final String EXAMPLE = "/config/example.properties";
+    private static final String QQBOT = "/config/qqbot.properties";
 
     private static final String YICODE = "/config/yicode.properties";
 
@@ -143,9 +144,13 @@ public class CodeGenerator {
         // 请求路径驼峰转连字符
         strategy.setControllerMappingHyphenStyle (true);
         // 乐观锁
-        strategy.setVersionFieldName (properties.getProperty ("custom.version"));
+        if (Boolean.TRUE.toString ().equals (properties.getProperty ("custom.enable.version"))) {
+            strategy.setVersionFieldName (properties.getProperty ("custom.version"));
+        }
         // 逻辑删除
-        strategy.setLogicDeleteFieldName (properties.getProperty ("custom.logicDelete"));
+        if (Boolean.TRUE.toString ().equals (properties.getProperty ("custom.enable.logicDelete"))) {
+            strategy.setLogicDeleteFieldName (properties.getProperty ("custom.logicDelete"));
+        }
         // 生成字段常量
         strategy.setEntityColumnConstant (true);
 

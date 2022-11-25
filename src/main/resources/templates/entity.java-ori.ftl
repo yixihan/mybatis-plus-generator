@@ -40,7 +40,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 @TableName("${table.name}")
 </#if>
 <#if swagger2>
-@ApiModel(value="${entity}对象", description="${table.comment!}")
+@ApiModel(value = "${entity}对象", description = "${table.comment!}")
 </#if>
 <#if superEntityClass??>
 public class ${entity} extends ${superEntityClass}<#if activeRecord><${entity}></#if> {
@@ -67,7 +67,7 @@ public class ${entity} implements Serializable {
     </#if>
     </#if>
     <#if field.keyFlag>
-    @TableId(value="${field.name}", type = IdType.AUTO)
+    @TableId(value = "${field.name}", type = IdType.AUTO)
     <#-- 普通字段 -->
     <#elseif field.fill??>
     <#-- -----   存在字段填充设置   ----->
