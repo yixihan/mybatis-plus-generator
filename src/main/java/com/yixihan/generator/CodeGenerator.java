@@ -25,17 +25,14 @@ import java.util.Properties;
 public class CodeGenerator {
 
     /**
-     * 自定义配置文件
-     */
-    private static final String EXAMPLE = "/config/example.properties";
-    private static final String QQBOT = "/config/qqbot.properties";
-
-    private static final String YICODE = "/config/yicode.properties";
-
-    /**
      * 数据库配置文件
      */
-    public static final String CONFIG_PATH = YICODE;
+    public static final String CONFIG_PATH = "/application.properties";
+    
+    /**
+     * 启用配置文件路径
+     */
+    public static final String ENABLE_CONFIG_PATH = "/config/%s";
 
     /**
      * java实体模板文件
@@ -45,19 +42,28 @@ public class CodeGenerator {
     /**
      * 作者
      */
-    public static final String AUTHOR = "yixihan";
+    public static String author;
 
 
     /**
      * 启动函数
      */
     public static void main(String[] args) throws IOException {
-
-
-        InputStream params = CodeGenerator.class.getResourceAsStream (CONFIG_PATH);
+        // 加载主配置文件
+        InputStream configParams = CodeGenerator.class.getResourceAsStream (CONFIG_PATH);
+        Properties configProps = new Properties ();
+        configProps.load (configParams);
+    
+        // 获取启用配置文件
+        String enableConfig = String.format (ENABLE_CONFIG_PATH, configProps.getProperty ("enable.config"));
+        // 加载启用配置文件
+        InputStream params = CodeGenerator.class.getResourceAsStream (enableConfig);
         Properties properties = new Properties ();
         properties.load (params);
-
+    
+        // 设置作者
+        author = properties.getProperty ("custom.author");
+        
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator ();
 
@@ -76,9 +82,9 @@ public class CodeGenerator {
         FileUtils.emptyDir (new File (projectPath + properties.getProperty ("custom.out.javaPath")));
 
         // 作者
-        gc.setAuthor (AUTHOR);
+        gc.setAuthor (author);
         gc.setOpen (false);
-        gc.setSwagger2 (true);
+        gc.setSwagger2 (Boolean.parseBoolean (properties.getProperty ("custom.enable.swagger")));
         gc.setBaseResultMap (false);
         gc.setBaseColumnList (false);
         // 不覆盖已有，则为false
@@ -134,7 +140,6 @@ public class CodeGenerator {
         // 表名生成策略
         strategy.setNaming (NamingStrategy.underline_to_camel);
         strategy.setColumnNaming (NamingStrategy.underline_to_camel);
-
         // 自动 lombok
         strategy.setEntityLombokModel (true);
         // 生成 @RestController 控制器
@@ -152,7 +157,7 @@ public class CodeGenerator {
             strategy.setLogicDeleteFieldName (properties.getProperty ("custom.logicDelete"));
         }
         // 生成字段常量
-        strategy.setEntityColumnConstant (true);
+        strategy.setEntityColumnConstant (Boolean.parseBoolean (properties.getProperty ("custom.enable.constant")));
 
         mpg.setStrategy (strategy);
         mpg.setTemplateEngine (new FreemarkerTemplateEngine ());

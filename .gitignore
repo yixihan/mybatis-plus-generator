@@ -104,8 +104,6 @@ cmake-build-*/
 *.iws
 
 # IntelliJ
-out/
-yicode.properties
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
@@ -127,4 +125,7 @@ fabric.properties
 
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
+
+!/src/main/resources/config/example.properties
+/src/main/resources/config/*.properties
 
