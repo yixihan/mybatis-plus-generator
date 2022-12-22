@@ -1,5 +1,5 @@
 <div align="center">
-  <div><h1>数据库设计表自动生成器</h1></div>
+  <div><h1>Mybatis-Plus实体类自动生成器</h1></div>
   <div>
     <img
       src="https://img.shields.io/badge/mybatis%20plus-3.4.1-blue.svg"
