@@ -1,6 +1,7 @@
 package com.yixihan.generator;
 
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
@@ -145,7 +146,11 @@ public class CodeGenerator {
         // 生成 @RestController 控制器
         strategy.setRestControllerStyle (true);
         // 生成的表
-        strategy.setInclude (getArrayValue (properties));
+        if (StringUtils.isBlank (properties.getProperty ("custom.tableNames"))) {
+            strategy.setExclude ();
+        } else {
+            strategy.setInclude (getArrayValue (properties));
+        }
         // 请求路径驼峰转连字符
         strategy.setControllerMappingHyphenStyle (true);
         // 乐观锁
